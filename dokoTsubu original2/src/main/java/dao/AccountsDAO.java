@@ -11,7 +11,7 @@ import model.User;
 
 public class AccountsDAO {
 	private final String JDBC_URL=
-			" jdbc:h2:tcp://localhost/~/dokoOriginal_2";
+			"jdbc:h2:tcp://localhost/~/dokoOriginal_2";
 	private final String DB_USER = "sa";
 	private final String DB_PASS = "";
 	
