@@ -51,4 +51,35 @@ public class AccountsDAO {
 		return account;
 		
 	}
+	
+	public boolean create(Account account) {
+		try {
+			Class.forName("org.h2.Driver");
+		}catch(ClassNotFoundException e){
+			throw new IllegalStateException(
+					"JDBCドライバを読み込めませんでした");
+		}
+		
+		try(Connection conn = DriverManager.getConnection(
+				JDBC_URL, DB_USER, DB_PASS)){
+			String sql = "INSERT INTO ACCOUNTS VALUES(?,?,?,?,?)";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			
+			pStmt.setString(1, account.getUserId());
+			pStmt.setString(2,account.getPass());
+			pStmt.setString(3,account.getMail());
+			pStmt.setString(4,account.getName());
+			pStmt.setInt(5,account.getAge());
+			
+			int rs = pStmt.executeUpdate();
+			
+			if(rs !=1) {
+				return false;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }
